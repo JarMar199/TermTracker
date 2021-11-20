@@ -8,6 +8,9 @@ import android.view.View;
 
 import com.example.termtracker.R;
 
+import Database.Repository;
+import Entities.Term;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -19,5 +22,6 @@ public class MainActivity extends AppCompatActivity {
     public void startScheduling(View view) {
         Intent intent = new Intent(MainActivity.this, TermList.class);
         startActivity(intent);
+
     }
 }

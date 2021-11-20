@@ -3,4 +3,7 @@
     <string name="start_scheduling">Start Scheduling</string>
     <string name="terms">Terms</string>
     <string name="courses">Course List</string>
+    <string name="addTerm">Add Term</string>
+    <string name="term_name">Term Name</string>
+    <string name="term_1">Term 1</string>
 </resources>

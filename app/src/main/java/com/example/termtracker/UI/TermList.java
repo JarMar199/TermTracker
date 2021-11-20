@@ -18,7 +18,7 @@ public class TermList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
-/*
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -30,10 +30,10 @@ public class TermList extends AppCompatActivity {
     }
 
 
- */
+
 
     public void addTerm(View view) {
-        Intent intent = new Intent(TermList.this, CourseList.class);
+        Intent intent = new Intent(TermList.this, AddTerm.class);
         startActivity(intent);
     }
 }

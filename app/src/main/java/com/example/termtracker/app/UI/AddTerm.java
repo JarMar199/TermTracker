@@ -1,8 +1,9 @@
-package com.example.termtracker.UI;
+package com.example.termtracker.app.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import Database.Repository;
+import Entities.Term;
+
 public class AddTerm extends AppCompatActivity {
     final Calendar myCalendarStart = Calendar.getInstance();
     EditText startText;
@@ -23,6 +27,7 @@ public class AddTerm extends AppCompatActivity {
     private EditText mEditID;
     DatePickerDialog.OnDateSetListener startDate;
     DatePickerDialog.OnDateSetListener endDate;
+    private Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +35,8 @@ public class AddTerm extends AppCompatActivity {
         setContentView(R.layout.activity_add_term);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        repository = new Repository(getApplication());
+        mEditName = findViewById(R.id.termName);
         startText = findViewById(R.id.startDate);
         endText = findViewById(R.id.endDate);
 
@@ -108,5 +114,14 @@ public class AddTerm extends AppCompatActivity {
     }
 
 
+    public void saveTerm(View view) {
 
+        String name = mEditName.getText().toString();
+        String start = startText.getText().toString();
+        String end = endText.getText().toString();
+        Term newTerm = new Term(name,start,end);
+        repository.insert(newTerm);
+        Intent intent = new Intent(AddTerm.this, TermList.class);
+        startActivity(intent);
+    }
 }

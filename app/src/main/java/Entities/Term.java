@@ -12,10 +12,9 @@ public class Term {
     private String termName;
     private String startDate;
     private String endDate;
-    List<Course> courseList;
+    //List<Course> courseList;
 
-    public Term(int termId, String termName, String startDate, String endDate) {
-        this.termId = termId;
+    public Term(String termName, String startDate, String endDate) {
         this.termName = termName;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -53,6 +52,7 @@ public class Term {
         this.endDate = endDate;
     }
 
+    /*
     public List<Course> getCourseList() {
         return courseList;
     }
@@ -60,4 +60,6 @@ public class Term {
     public void addCourse(Course course) {
        courseList.add(course);
     }
+
+     */
 }

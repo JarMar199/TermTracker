@@ -1,4 +1,4 @@
-package com.example.termtracker.UI;
+package com.example.termtracker.app.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.termtracker.R;
-
-import Database.Repository;
-import Entities.Term;
 
 public class MainActivity extends AppCompatActivity {
 

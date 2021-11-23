@@ -12,7 +12,7 @@ public class Course {
     private int courseId;
 
     private String courseName, startDate, endDate, status, note, instructorName, instructorPhone,instructorEmail;
-    List<Assessment> assessmentList;
+    //List<Assessment> assessmentList;
 
     public Course(int courseId, String courseName, String startDate, String endDate, String status, String note, String instructorName, String instructorPhone, String instructorEmail) {
         this.courseId = courseId;
@@ -98,6 +98,7 @@ public class Course {
         this.instructorEmail = instructorEmail;
     }
 
+    /*
     public List<Assessment> getAssessmentList() {
         return assessmentList;
     }
@@ -105,4 +106,6 @@ public class Course {
     public void addAssessment(Assessment assessment) {
         assessmentList.add(assessment);
     }
+
+     */
 }

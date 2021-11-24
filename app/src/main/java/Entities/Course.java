@@ -10,12 +10,14 @@ import java.util.List;
 public class Course {
     @PrimaryKey(autoGenerate = true)
     private int courseId;
-
+    private int termId;
     private String courseName, startDate, endDate, status, note, instructorName, instructorPhone,instructorEmail;
     //List<Assessment> assessmentList;
 
-    public Course(int courseId, String courseName, String startDate, String endDate, String status, String note, String instructorName, String instructorPhone, String instructorEmail) {
-        this.courseId = courseId;
+
+
+    public Course(String courseName, String startDate, String endDate, String status, String note, String instructorName, String instructorPhone, String instructorEmail, int termId) {
+
         this.courseName = courseName;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -24,6 +26,7 @@ public class Course {
         this.instructorName = instructorName;
         this.instructorPhone = instructorPhone;
         this.instructorEmail = instructorEmail;
+        this.termId = termId;
     }
 
     public int getCourseId() {
@@ -98,6 +101,13 @@ public class Course {
         this.instructorEmail = instructorEmail;
     }
 
+    public int getTermId() {
+        return termId;
+    }
+
+    public void setTermId(int termId) {
+        this.termId = termId;
+    }
     /*
     public List<Assessment> getAssessmentList() {
         return assessmentList;

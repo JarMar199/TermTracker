@@ -56,7 +56,7 @@
                 android:text="Term Start Date" />
 
                 <EditText
-                    android:id="@+id/startDate"
+                    android:id="@+id/termStartDate"
                     android:layout_width="match_parent"
                     android:layout_height="57dp"
                     android:focusable="false"
@@ -77,7 +77,7 @@
                 android:text="Term Start Date" />
 
             <EditText
-                android:id="@+id/endDate"
+                android:id="@+id/termEndDate"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
                 android:focusable="false"

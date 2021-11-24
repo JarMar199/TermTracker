@@ -10,6 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TermTracker">
         <activity
+            android:name=".app.UI.AddCourse"
+            android:exported="false"
+            android:label="Add Course"/>
+        <activity
+            android:name=".app.UI.CourseList"
+            android:exported="false"
+            android:label="Courses" />
+        <activity
             android:name=".app.UI.AddTerm"
             android:exported="false"
             android:label="@string/addTerm" />

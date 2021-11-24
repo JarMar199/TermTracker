@@ -24,4 +24,7 @@ public interface TermDao {
 
     @Query("Select * FROM term_table ORDER BY termID ASC")
     List<Term> getAllTerms();
+
+    @Query("SELECT termId from term_table WHERE termName = :selectedTerm")
+    int selectTermId(String selectedTerm);
 }

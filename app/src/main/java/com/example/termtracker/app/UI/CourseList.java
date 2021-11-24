@@ -2,5 +2,37 @@ package com.example.termtracker.app.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
+import com.example.termtracker.R;
+
+import Database.Repository;
+
 public class CourseList extends AppCompatActivity {
+    String termName, startDate, endDate;
+    int termId;
+    TextView textName;
+    Repository repository;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_course_list);
+        termName = getIntent().getStringExtra("termName");
+        termId = getIntent().getIntExtra("termId",-1);
+        textName = findViewById(R.id.courseTermText);
+        textName.setText(String.valueOf(termName));
+        repository = new Repository(getApplication());
+
+    }
+
+    public void addCourse(View view) {
+        Intent intent = new Intent(CourseList.this, AddCourse.class);
+        intent.putExtra("termName", termName);
+        intent.putExtra("termId", termId);
+        startActivity(intent);
+    }
 }

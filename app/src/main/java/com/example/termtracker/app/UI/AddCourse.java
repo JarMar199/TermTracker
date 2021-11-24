@@ -7,38 +7,57 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.termtracker.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import Database.Repository;
-import Entities.Term;
+import Entities.Course;
 
-public class AddTerm extends AppCompatActivity {
+public class AddCourse extends AppCompatActivity {
+    String termName;
+    int termId;
+    TextView textName;
     final Calendar myCalendarStart = Calendar.getInstance();
     EditText startText;
     EditText endText;
+    EditText instructorName, instructorPhone, instructorEmail, note;
     private EditText mEditName;
     private EditText mEditID;
     DatePickerDialog.OnDateSetListener startDate;
     DatePickerDialog.OnDateSetListener endDate;
     private Repository repository;
-
+    Spinner spinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_term);
+        setContentView(R.layout.activity_add_course);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         repository = new Repository(getApplication());
-        mEditName = findViewById(R.id.termName);
-        startText = findViewById(R.id.termStartDate);
-        endText = findViewById(R.id.termEndDate);
+        mEditName = findViewById(R.id.courseName);
+        startText = findViewById(R.id.courseStartDate);
+        endText = findViewById(R.id.courseEndDate);
+        spinner = findViewById(R.id.courseStatusSpinner);
+        instructorName = findViewById(R.id.courseInstructorName);
+        instructorPhone = findViewById(R.id.courseInstructorPhone);
+        instructorEmail = findViewById(R.id.courseInstructorEmail);
+        note = findViewById(R.id.courseNote);
+
+        termName = getIntent().getStringExtra("termName");
+        termId = getIntent().getIntExtra("termId", -1);
+        textName = findViewById(R.id.courseTermText);
+        textName.setText(termName);
 
         startDate = new DatePickerDialog.OnDateSetListener() {
 
@@ -55,7 +74,6 @@ public class AddTerm extends AppCompatActivity {
                 updateLabelDate(startText);
             }
         };
-
         endDate = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -71,13 +89,12 @@ public class AddTerm extends AppCompatActivity {
                 updateLabelDate(endText);
             }
         };
-
         startText.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(AddTerm.this, startDate, myCalendarStart
+                new DatePickerDialog(AddCourse.this, startDate, myCalendarStart
                         .get(Calendar.YEAR), myCalendarStart.get(Calendar.MONTH),
                         myCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -88,14 +105,16 @@ public class AddTerm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(AddTerm.this, endDate, myCalendarStart
+                new DatePickerDialog(AddCourse.this, endDate, myCalendarStart
                         .get(Calendar.YEAR), myCalendarStart.get(Calendar.MONTH),
                         myCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
+        List<String> statuses = Arrays.asList("In Progress", "Completed", "Dropped","Planning to take");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(AddCourse.this, android.R.layout.simple_spinner_dropdown_item,statuses);
+        spinner.setAdapter(adapter);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -113,15 +132,20 @@ public class AddTerm extends AppCompatActivity {
         date.setText(sdf.format(myCalendarStart.getTime()));
     }
 
-
-    public void saveTerm(View view) {
-
+    public void addCourse(View view) {
         String name = mEditName.getText().toString();
         String start = startText.getText().toString();
         String end = endText.getText().toString();
-        Term newTerm = new Term(name,start,end);
-        repository.insert(newTerm);
-        Intent intent = new Intent(AddTerm.this, TermList.class);
+        String status = spinner.getSelectedItem().toString();
+        String insName = instructorName.getText().toString();
+        String insPhone = instructorPhone.getText().toString();
+        String insEmail = instructorEmail.getText().toString();
+        String notes = note.getText().toString();
+        Course newCourse = new Course(name, start, end, status, notes, insName, insPhone, insEmail, termId);
+        repository.insert(newCourse);
+
+        Intent intent = new Intent(AddCourse.this, TermList.class);
         startActivity(intent);
+
     }
 }

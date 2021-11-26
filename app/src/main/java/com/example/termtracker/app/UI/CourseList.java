@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,6 +24,9 @@ public class CourseList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_list);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         termName = getIntent().getStringExtra("termName");
         termId = getIntent().getIntExtra("termId",-1);
         startDate = getIntent().getStringExtra("termStart");
@@ -43,10 +47,22 @@ public class CourseList extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void addCourse(View view) {
         Intent intent = new Intent(CourseList.this, AddCourse.class);
         intent.putExtra("termName", termName);
         intent.putExtra("termId", termId);
+        intent.putExtra("termStart",startDate);
+        intent.putExtra("termEnd", endDate);
         startActivity(intent);
     }
 }

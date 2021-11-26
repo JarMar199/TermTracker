@@ -25,7 +25,7 @@ import Database.Repository;
 import Entities.Course;
 
 public class AddCourse extends AppCompatActivity {
-    String termName;
+    String termName, termStart, termEnd;
     int termId;
     TextView textName;
     final Calendar myCalendarStart = Calendar.getInstance();
@@ -56,6 +56,8 @@ public class AddCourse extends AppCompatActivity {
 
         termName = getIntent().getStringExtra("termName");
         termId = getIntent().getIntExtra("termId", -1);
+        termStart = getIntent().getStringExtra("termStart");
+        termEnd = getIntent().getStringExtra("termEnd");
         textName = findViewById(R.id.courseTermText);
         textName.setText(termName);
 
@@ -144,7 +146,11 @@ public class AddCourse extends AppCompatActivity {
         Course newCourse = new Course(name, start, end, status, notes, insName, insPhone, insEmail, termId);
         repository.insert(newCourse);
 
-        Intent intent = new Intent(AddCourse.this, TermList.class);
+        Intent intent = new Intent(AddCourse.this, CourseList.class);
+        intent.putExtra("termName", termName);
+        intent.putExtra("termId", termId);
+        intent.putExtra("termStart",termStart);
+        intent.putExtra("termEnd", termEnd);
         startActivity(intent);
 
     }

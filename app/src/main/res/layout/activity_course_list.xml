@@ -33,7 +33,7 @@
         app:maxImageSize="56dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/termRecyclerView"
+        android:id="@+id/courseRecyclerView"
         android:layout_width="409dp"
         android:layout_height="641dp"
         tools:layout_editor_absoluteX="1dp"

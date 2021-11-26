@@ -1,6 +1,8 @@
 package com.example.termtracker.app.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +28,12 @@ public class CourseList extends AppCompatActivity {
         textName = findViewById(R.id.courseTermText);
         textName.setText(String.valueOf(termName));
         repository = new Repository(getApplication());
+        repository.getAssociatedCourses(termId);
+        RecyclerView recyclerView = findViewById(R.id.courseRecyclerView);
+        final CourseAdapter adapter = new CourseAdapter(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.setCourse(repository.getAssociatedCourses(termId));
 
     }
 

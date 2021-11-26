@@ -200,7 +200,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/saveTerm"
+        android:id="@+id/saveCourse"
         android:layout_width="405dp"
         android:layout_height="51dp"
         android:text="Add Course"

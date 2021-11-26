@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -42,5 +43,17 @@ public class AssessmentList extends AppCompatActivity {
     }
 
     public void addAssessment(View view) {
+        Intent intent = new Intent(AssessmentList.this, AddAssessment.class);
+        intent.putExtra("courseName", courseName);
+        intent.putExtra("courseId", courseId);
+        intent.putExtra("courseStart", startDate);
+        intent.putExtra("courseEnd", endDate);
+        intent.putExtra("courseStatus", status);
+        intent.putExtra("courseInsName", insName);
+        intent.putExtra("courseInsPhone", insPhone);
+        intent.putExtra("courseInsEmail", insEmail);
+        intent.putExtra("courseNote", note);
+        intent.putExtra("courseTermId", termId);
+        startActivity(intent);
     }
 }

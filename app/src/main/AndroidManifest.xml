@@ -11,7 +11,8 @@
         android:theme="@style/Theme.TermTracker">
         <activity
             android:name=".app.UI.AssessmentList"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Course Assessments"/>
         <activity
             android:name=".app.UI.AddCourse"
             android:exported="false"

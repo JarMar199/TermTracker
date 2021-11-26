@@ -8,13 +8,16 @@ public class Assessment {
     @PrimaryKey(autoGenerate = true)
     private int assessmentId;
 
+
+    private int courseId;
     private String assessmentName, type, startDate, endDate;
 
-    public Assessment(String assessmentName, String type, String startDate, String endDate) {
+    public Assessment(String assessmentName, String type, String startDate, String endDate, int courseId) {
         this.assessmentName = assessmentName;
         this.type = type;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.courseId = courseId;
     }
 
     public int getAssessmentId() {
@@ -55,5 +58,13 @@ public class Assessment {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 }

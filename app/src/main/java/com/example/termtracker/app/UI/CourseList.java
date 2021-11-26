@@ -17,7 +17,7 @@ import Database.Repository;
 public class CourseList extends AppCompatActivity {
     String termName, startDate, endDate;
     int termId;
-    TextView textName;
+    TextView textName, textStart, textEnd;
     Repository repository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +25,14 @@ public class CourseList extends AppCompatActivity {
         setContentView(R.layout.activity_course_list);
         termName = getIntent().getStringExtra("termName");
         termId = getIntent().getIntExtra("termId",-1);
+        startDate = getIntent().getStringExtra("termStart");
+        endDate = getIntent().getStringExtra("termEnd");
         textName = findViewById(R.id.courseTermText);
-        textName.setText(String.valueOf(termName));
+        textName.setText(termName);
+        textStart = findViewById(R.id.courseTermStartDate);
+        textStart.setText("Start Date: " + startDate);
+        textEnd = findViewById(R.id.courseTermEndDate);
+        textEnd.setText("End Date: " + endDate);
         repository = new Repository(getApplication());
         repository.getAssociatedCourses(termId);
         RecyclerView recyclerView = findViewById(R.id.courseRecyclerView);

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.termtracker.R;
 
@@ -177,7 +179,38 @@ public class AddCourse extends AppCompatActivity {
         String insEmail = instructorEmail.getText().toString();
         String notes = note.getText().toString();
         Course newCourse = new Course(name, start, end, status, notes, insName, insPhone, insEmail, termId);
-        repository.insert(newCourse);
+
+
+        if(TextUtils.isEmpty(name)){
+            mEditName.setError("Enter Course Name");
+            return;
+        }
+        if(TextUtils.isEmpty(start)) {
+            Toast.makeText(this, "Enter Start Date", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(TextUtils.isEmpty(end)) {
+            Toast.makeText(this, "Enter End Date", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(TextUtils.isEmpty(insName)){
+            instructorName.setError("Enter Instructor Name");
+            return;
+        }
+        if(TextUtils.isEmpty(insPhone)){
+            instructorPhone.setError("Enter Instructor Phone");
+            return;
+        }
+        if(TextUtils.isEmpty(insEmail)){
+            instructorEmail.setError("Enter Instructor Email");
+            return;
+        }
+
+        if(selectedCCourseID != -1) {
+            newCourse.setCourseId(selectedCCourseID);
+            repository.update(newCourse);
+        }else
+            repository.insert(newCourse);
 
         Intent intent = new Intent(AddCourse.this, CourseList.class);
         intent.putExtra("termName", termName);

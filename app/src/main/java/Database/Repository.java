@@ -80,6 +80,15 @@ public class Repository {
         }
     }
 
+    public void update(Course course) {
+        databaseExecutor.execute(()-> mCourseDao.update(course));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Course getCourse(int courseId){
         databaseExecutor.execute(()-> selectedCourse = mCourseDao.getCourse(courseId));
         try {

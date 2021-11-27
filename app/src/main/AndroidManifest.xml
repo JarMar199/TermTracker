@@ -15,7 +15,8 @@
             android:label="Assessment Details" />
         <activity
             android:name=".app.UI.AddAssessment"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Add Assessment"/>
         <activity
             android:name=".app.UI.AssessmentList"
             android:exported="false"

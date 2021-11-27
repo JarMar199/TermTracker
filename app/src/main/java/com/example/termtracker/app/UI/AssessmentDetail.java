@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.example.termtracker.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -30,6 +32,7 @@ public class AssessmentDetail extends AppCompatActivity {
     Course selectedCourse;
     TextView textName, textStart, textEnd, textType;
     Repository repository;
+    Assessment currentAssessment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,11 +57,37 @@ public class AssessmentDetail extends AppCompatActivity {
         textEnd.setText("End Date: " + endDate);
         textType = findViewById(R.id.assessmentType);
         textType.setText(type);
-
-
+        currentAssessment = repository.getAssessment(assessmentId);
     }
 
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_assessment, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            case R.id.delete:
+                repository.delete(currentAssessment);
+                Intent intent = new Intent(AssessmentDetail.this, AssessmentList.class);
+                intent.putExtra("courseName", selectedCourse.getCourseName());
+                intent.putExtra("courseId", selectedCourse.getCourseId());
+                intent.putExtra("courseStart", selectedCourse.getStartDate());
+                intent.putExtra("courseEnd", selectedCourse.getEndDate());
+                intent.putExtra("courseStatus", selectedCourse.getStatus());
+                intent.putExtra("courseInsName",selectedCourse.getInstructorName());
+                intent.putExtra("courseInsPhone", selectedCourse.getInstructorPhone());
+                intent.putExtra("courseInsEmail", selectedCourse.getInstructorEmail());
+                intent.putExtra("courseNote", selectedCourse.getNote());
+                intent.putExtra("courseTermId", selectedCourse.getTermId());
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void editTerm(View view) {
         Intent intent = new Intent(AssessmentDetail.this, AddAssessment.class);

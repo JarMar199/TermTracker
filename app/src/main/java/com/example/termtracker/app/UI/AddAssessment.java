@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.termtracker.R;
 
@@ -150,6 +152,19 @@ public class AddAssessment extends AppCompatActivity {
         start = mEditStart.getText().toString();
         end = mEditEnd.getText().toString();
         type = spinner.getSelectedItem().toString();
+
+        if(TextUtils.isEmpty(name)){
+            mEditName.setError("Enter Assessment Name");
+            return;
+        }
+        if(TextUtils.isEmpty(start)) {
+            Toast.makeText(this, "Enter Start Date", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(TextUtils.isEmpty(end)) {
+            Toast.makeText(this, "Enter End Date", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Assessment newAssessment = new Assessment(name, type, start, end, courseId);
         if(assessmentId != -1) {

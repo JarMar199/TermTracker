@@ -22,6 +22,7 @@ public class Repository {
     private List<Course> mAssociatedCourses;
     private List<Assessment> mAssociatedAssessments;
     private Course selectedCourse;
+    private Assessment selectedAssessment;
     private int mSelectedCourseId;
     private int mSelectedTermId;
     private int mAssessmentCount;
@@ -116,6 +117,15 @@ public class Repository {
         }
     }
 
+    public void delete(Assessment assessment) {
+        databaseExecutor.execute(()-> mAssessmentDao.delete(assessment));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Assessment> getAssociatedAssessments(int courseId) {
         databaseExecutor.execute(()-> mAssociatedAssessments = mAssessmentDao.getAssociatedAssessments(courseId));
         try {
@@ -125,6 +135,17 @@ public class Repository {
         }
         return mAssociatedAssessments;
     }
+
+    public Assessment getAssessment(int assessmentid){
+        databaseExecutor.execute(()-> selectedAssessment = mAssessmentDao.getAssessment(assessmentid));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return selectedAssessment;
+    }
+
 
     public int getAssessmentCount(int courseId) {
 

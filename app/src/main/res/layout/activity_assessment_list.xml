@@ -149,17 +149,17 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/assessmentRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="517dp"
-            android:background="@color/purple_500"
-            android:paddingVertical="10dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/assessmentLbl">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/assessmentRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="418dp"
+                android:background="@color/purple_500"
+                android:paddingVertical="10dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/assessmentLbl">
 
 
-        </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
 
 

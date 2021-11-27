@@ -6,7 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".app.UI.AssessmentList">
 
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:layout_editor_absoluteX="1dp"
+    tools:layout_editor_absoluteY="1dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/assessmentCourseText"
         android:layout_width="match_parent"
@@ -129,6 +137,33 @@
 
     </LinearLayout>
 
+        <TextView
+            android:id="@+id/assessmentLbl"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@color/purple_500"
+            android:text="Assessments"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/assessmentRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="517dp"
+            android:background="@color/purple_500"
+            android:paddingVertical="10dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/assessmentLbl">
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+
+    </LinearLayout>
+</ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addAssessmentFab"
@@ -139,35 +174,10 @@
         android:clickable="true"
         android:scaleType="center"
         android:onClick="addAssessment"
-        app:backgroundTint="@color/purple_200"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/ic_add_foreground"
-        app:maxImageSize="56dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/assessmentRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="641dp"
-        android:background="@color/purple_500"
-        android:paddingVertical="10dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/assessmentLbl" >
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <TextView
-        android:id="@+id/assessmentLbl"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@color/purple_500"
-        android:text="Assessments"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/courseInfoLinearLayout" />
-
+        tools:layout_editor_absoluteX="326dp"
+        tools:layout_editor_absoluteY="649dp"
+        app:maxImageSize="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

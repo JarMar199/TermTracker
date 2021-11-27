@@ -15,7 +15,7 @@ import Database.Repository;
 
 public class AssessmentList extends AppCompatActivity {
     String courseName, startDate, endDate, status, insName, insPhone, insEmail, note;
-    int courseId, termId;
+    int courseId, termId, assessmentCount;
     TextView textName, textStart, textEnd, textStatus, textInsName, textInsPhone, textInsEmail, textNote;
     Repository repository;
     @Override
@@ -34,7 +34,6 @@ public class AssessmentList extends AppCompatActivity {
         courseId = getIntent().getIntExtra("courseId", -1);
         termId = getIntent().getIntExtra("courseTermId", -1);
 
-
         textName = findViewById(R.id.assessmentCourseText);
         textName.setText(courseName);
         textStart = findViewById(R.id.assessmentCourseStartDate);
@@ -52,13 +51,9 @@ public class AssessmentList extends AppCompatActivity {
         textNote = findViewById(R.id.assessmentCourseNote);
         textNote.setText(note);
 
-
-
-
-
-
         repository = new Repository(getApplication());
         repository.getAssociatedAssessments(courseId);
+        assessmentCount = repository.getAssessmentCount(courseId);
         RecyclerView recyclerView = findViewById(R.id.assessmentRecyclerView);
         final AssessmentAdapter adapter = new AssessmentAdapter(this);
         recyclerView.setAdapter(adapter);
@@ -68,17 +63,20 @@ public class AssessmentList extends AppCompatActivity {
     }
 
     public void addAssessment(View view) {
-        Intent intent = new Intent(AssessmentList.this, AddAssessment.class);
-        intent.putExtra("courseName", courseName);
-        intent.putExtra("courseId", courseId);
-        intent.putExtra("courseStart", startDate);
-        intent.putExtra("courseEnd", endDate);
-        intent.putExtra("courseStatus", status);
-        intent.putExtra("courseInsName", insName);
-        intent.putExtra("courseInsPhone", insPhone);
-        intent.putExtra("courseInsEmail", insEmail);
-        intent.putExtra("courseNote", note);
-        intent.putExtra("courseTermId", termId);
-        startActivity(intent);
+
+        if (assessmentCount <= 5) {
+            Intent intent = new Intent(AssessmentList.this, AddAssessment.class);
+            intent.putExtra("courseName", courseName);
+            intent.putExtra("courseId", courseId);
+            intent.putExtra("courseStart", startDate);
+            intent.putExtra("courseEnd", endDate);
+            intent.putExtra("courseStatus", status);
+            intent.putExtra("courseInsName", insName);
+            intent.putExtra("courseInsPhone", insPhone);
+            intent.putExtra("courseInsEmail", insEmail);
+            intent.putExtra("courseNote", note);
+            intent.putExtra("courseTermId", termId);
+            startActivity(intent);
+        }
     }
 }

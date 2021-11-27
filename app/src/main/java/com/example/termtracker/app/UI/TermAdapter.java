@@ -20,7 +20,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
     class TermViewHolder extends RecyclerView.ViewHolder{
         private final TextView termItemView;
-        //private final TextView termItemView2;
 
         private TermViewHolder(View itemView) {
             super(itemView);

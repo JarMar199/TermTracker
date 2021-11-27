@@ -26,7 +26,7 @@ import Entities.Assessment;
 public class AddAssessment extends AppCompatActivity {
     String courseName, courseStartDate, courseEndDate, status, insName, insPhone, insEmail, note;
     int courseId, termId;
-    TextView mTextId;
+    TextView mTextId, courseTextView;
     EditText mEditName, mEditStart, mEditEnd;
     final Calendar myCalendarStart = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener startDate;
@@ -54,6 +54,9 @@ public class AddAssessment extends AppCompatActivity {
         note = getIntent().getStringExtra("courseNote");
         courseId = getIntent().getIntExtra("courseId", -1);
         termId = getIntent().getIntExtra("courseTermId", -1);
+
+        courseTextView = findViewById(R.id.assessmentCourseText);
+        courseTextView.setText(courseName);
 
         startDate = new DatePickerDialog.OnDateSetListener() {
 

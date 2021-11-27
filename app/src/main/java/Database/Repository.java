@@ -23,6 +23,7 @@ public class Repository {
     private List<Assessment> mAssociatedAssessments;
     private int mSelectedCourseId;
     private int mSelectedTermId;
+    private int mAssessmentCount;
     private static int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
@@ -103,6 +104,12 @@ public class Repository {
             e.printStackTrace();
         }
         return mAssociatedAssessments;
+    }
+
+    public int getAssessmentCount(int courseId) {
+
+        databaseExecutor.execute(()-> mAssessmentCount = mAssessmentDao.getAssessmentCount(courseId));
+        return mAssessmentCount;
     }
 
 }

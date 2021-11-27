@@ -2,6 +2,9 @@ package com.example.termtracker.app.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -69,19 +72,31 @@ public class AssessmentDetail extends AppCompatActivity {
             case R.id.notify:
                 String format = "MM/dd/yy";
                 SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
-                Date myDate = null;
+                Date startDateNotice = null;
+                Date endDateNotice = null;
                 try {
-                    myDate = sdf.parse(startDate)
+                    startDateNotice = sdf.parse(startDate);
+                    endDateNotice = sdf.parse(endDate);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                Long trigger = myDate.getTime();
+                Long startTrigger = startDateNotice.getTime();
+                Long endTrigger = endDateNotice.getTime();
+                Intent intent= new Intent(AssessmentDetail.this,MyReceiver.class);
+                intent.putExtra("key",assessmentName + " Starts Today");
+                PendingIntent sender=PendingIntent.getBroadcast(AssessmentDetail.this, ++MainActivity.numAlert,intent,0);
+                AlarmManager alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, sender);
 
-
-
+                intent= new Intent(AssessmentDetail.this,MyReceiver.class);
+                intent.putExtra("key",assessmentName + " Ends Today");
+                sender=PendingIntent.getBroadcast(AssessmentDetail.this, ++MainActivity.numAlert,intent,0);
+                alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, sender);
+                return true;
             case R.id.delete:
                 repository.delete(currentAssessment);
-                Intent intent = new Intent(AssessmentDetail.this, AssessmentList.class);
+                intent = new Intent(AssessmentDetail.this, AssessmentList.class);
                 intent.putExtra("courseName", selectedCourse.getCourseName());
                 intent.putExtra("courseId", selectedCourse.getCourseId());
                 intent.putExtra("courseStart", selectedCourse.getStartDate());

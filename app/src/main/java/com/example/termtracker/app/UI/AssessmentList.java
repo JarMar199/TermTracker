@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.termtracker.R;
+
+import java.util.Objects;
 
 import Database.Repository;
 
@@ -22,6 +25,8 @@ public class AssessmentList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment_list);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         courseName = getIntent().getStringExtra("courseName");
         startDate = getIntent().getStringExtra("courseStart");
@@ -53,18 +58,19 @@ public class AssessmentList extends AppCompatActivity {
 
         repository = new Repository(getApplication());
         repository.getAssociatedAssessments(courseId);
-        assessmentCount = repository.getAssessmentCount(courseId);
+
         RecyclerView recyclerView = findViewById(R.id.assessmentRecyclerView);
         final AssessmentAdapter adapter = new AssessmentAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.setAssessment(repository.getAssociatedAssessments(courseId));
+        assessmentCount = adapter.getItemCount();
 
     }
 
     public void addAssessment(View view) {
 
-        if (assessmentCount <= 5) {
+        if (assessmentCount < 5) {
             Intent intent = new Intent(AssessmentList.this, AddAssessment.class);
             intent.putExtra("courseName", courseName);
             intent.putExtra("courseId", courseId);
@@ -77,6 +83,8 @@ public class AssessmentList extends AppCompatActivity {
             intent.putExtra("courseNote", note);
             intent.putExtra("courseTermId", termId);
             startActivity(intent);
+        } else {
+            Toast.makeText(getApplicationContext(),"Only 5 assessments may be added",Toast.LENGTH_LONG).show();
         }
     }
 }

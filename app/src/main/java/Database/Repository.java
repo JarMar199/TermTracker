@@ -109,7 +109,7 @@ public class Repository {
     public int getAssessmentCount(int courseId) {
 
         databaseExecutor.execute(()-> mAssessmentCount = mAssessmentDao.getAssessmentCount(courseId));
-        return mAssessmentCount;
+        return Integer.valueOf(mAssessmentCount);
     }
 
 }

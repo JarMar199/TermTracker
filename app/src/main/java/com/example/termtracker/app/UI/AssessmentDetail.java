@@ -2,12 +2,23 @@ package com.example.termtracker.app.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.termtracker.R;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
 
 import Database.Repository;
 import Entities.Assessment;
@@ -23,6 +34,8 @@ public class AssessmentDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment_detail);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         assessmentName = getIntent().getStringExtra("assessmentName");
         startDate = getIntent().getStringExtra("assessmentStart");
@@ -44,6 +57,8 @@ public class AssessmentDetail extends AppCompatActivity {
 
 
     }
+
+
 
     public void editTerm(View view) {
         Intent intent = new Intent(AssessmentDetail.this, AddAssessment.class);

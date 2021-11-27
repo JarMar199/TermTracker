@@ -6,4 +6,6 @@
     <string name="addTerm">Add Term</string>
     <string name="term_name">Term Name</string>
     <string name="term_1">Term 1</string>
+    <string name="channel_name">channel name</string>
+    <string name="channel_description">channe description</string>
 </resources>

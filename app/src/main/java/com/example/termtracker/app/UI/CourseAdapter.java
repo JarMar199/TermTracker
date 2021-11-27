@@ -15,7 +15,6 @@ import com.example.termtracker.R;
 import java.util.List;
 
 import Entities.Course;
-import Entities.Term;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
     class CourseViewHolder extends RecyclerView.ViewHolder {

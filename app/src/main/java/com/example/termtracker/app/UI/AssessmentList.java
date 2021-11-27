@@ -98,4 +98,7 @@ public class AssessmentList extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Only 5 assessments may be added",Toast.LENGTH_LONG).show();
         }
     }
+
+    public void editCourse(View view) {
+    }
 }

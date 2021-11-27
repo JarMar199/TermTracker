@@ -181,4 +181,20 @@
         app:maxImageSize="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editAssessmentFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:onClick="editCourse"
+        android:scaleType="center"
+        app:backgroundTint="@color/purple_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:srcCompat="@drawable/ic_edit_foreground"
+        app:maxImageSize="56dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

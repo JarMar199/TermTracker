@@ -2,23 +2,18 @@ package com.example.termtracker.app.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.termtracker.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -71,6 +66,19 @@ public class AssessmentDetail extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.notify:
+                String format = "MM/dd/yy";
+                SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
+                Date myDate = null;
+                try {
+                    myDate = sdf.parse(startDate)
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long trigger = myDate.getTime();
+
+
+
             case R.id.delete:
                 repository.delete(currentAssessment);
                 Intent intent = new Intent(AssessmentDetail.this, AssessmentList.class);

@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TermTracker">
+        <receiver
+            android:name=".app.UI.MyReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <activity
             android:name=".app.UI.AssessmentDetail"
             android:exported="false"
@@ -16,7 +21,7 @@
         <activity
             android:name=".app.UI.AddAssessment"
             android:exported="false"
-            android:label="Add Assessment"/>
+            android:label="Add Assessment" />
         <activity
             android:name=".app.UI.AssessmentList"
             android:exported="false"

@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -47,12 +47,22 @@ public class CourseList extends AppCompatActivity {
 
     }
 
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_course, menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.share:
+
+            case R.id.notify:
+
+            case R.id.delete:
         }
         return super.onOptionsItemSelected(item);
     }
@@ -63,6 +73,16 @@ public class CourseList extends AppCompatActivity {
         intent.putExtra("termId", termId);
         intent.putExtra("termStart",startDate);
         intent.putExtra("termEnd", endDate);
+        startActivity(intent);
+    }
+
+    public void editTerm(View view) {
+        Intent intent = new Intent(CourseList.this, AddCourse.class);
+        intent.putExtra("termName", termName);
+        intent.putExtra("termId", termId);
+        intent.putExtra("termStart",startDate);
+        intent.putExtra("termEnd", endDate);
+
         startActivity(intent);
     }
 }

@@ -25,6 +25,8 @@ import Entities.Assessment;
 
 public class AddAssessment extends AppCompatActivity {
     String courseName, courseStartDate, courseEndDate, status, insName, insPhone, insEmail, note;
+    String assessmentName, assessmentStart, assessmentEnd, assessmentType;
+    int assessmentId;
     int courseId, termId;
     TextView mTextId, courseTextView;
     EditText mEditName, mEditStart, mEditEnd;
@@ -57,6 +59,15 @@ public class AddAssessment extends AppCompatActivity {
 
         courseTextView = findViewById(R.id.assessmentCourseText);
         courseTextView.setText(courseName);
+
+        assessmentName = getIntent().getStringExtra("assessmentName");
+        assessmentStart = getIntent().getStringExtra("assessmentStart");
+        assessmentEnd = getIntent().getStringExtra("assessmentEnd");
+        assessmentType = getIntent().getStringExtra("assessmentType");
+        assessmentId = getIntent().getIntExtra("assessmentId", -1);
+
+
+
 
         startDate = new DatePickerDialog.OnDateSetListener() {
 
@@ -110,6 +121,20 @@ public class AddAssessment extends AppCompatActivity {
         List<String> assessmentTypes = Arrays.asList("Performance", "Objective");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(AddAssessment.this, android.R.layout.simple_spinner_dropdown_item,assessmentTypes);
         spinner.setAdapter(adapter);
+
+        if(assessmentId != -1) {
+            mTextId.setText(String.valueOf(assessmentId));
+            mEditName.setText(assessmentName);
+
+            mEditStart.setText(assessmentStart);
+            mEditEnd.setText(assessmentEnd);
+            if(assessmentType.equals("Performance"))
+                spinner.setSelection(0);
+            else
+                spinner.setSelection(1);
+
+
+        }
     }
 
     private void updateLabelDate(EditText date) {
@@ -125,8 +150,15 @@ public class AddAssessment extends AppCompatActivity {
         start = mEditStart.getText().toString();
         end = mEditEnd.getText().toString();
         type = spinner.getSelectedItem().toString();
+
         Assessment newAssessment = new Assessment(name, type, start, end, courseId);
-        repository.insert(newAssessment);
+        if(assessmentId != -1) {
+            newAssessment.setAssessmentId(assessmentId);
+            repository.update(newAssessment);
+        }
+        else
+            repository.insert(newAssessment);
+
 
         Intent intent = new Intent(AddAssessment.this, AssessmentList.class);
         intent.putExtra("courseName", courseName);

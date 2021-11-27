@@ -122,7 +122,7 @@
         android:id="@+id/saveAssessment"
         android:layout_width="405dp"
         android:layout_height="51dp"
-        android:text="Add Assessment"
+        android:text="Save Assessment"
         android:onClick="addAssessment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

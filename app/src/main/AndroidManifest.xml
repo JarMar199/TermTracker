@@ -11,14 +11,15 @@
         android:theme="@style/Theme.TermTracker">
         <activity
             android:name=".app.UI.AssessmentDetail"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Assessment Details" />
         <activity
             android:name=".app.UI.AddAssessment"
             android:exported="false" />
         <activity
             android:name=".app.UI.AssessmentList"
             android:exported="false"
-            android:label="Course Information" />
+            android:label="Course Details" />
         <activity
             android:name=".app.UI.AddCourse"
             android:exported="false"
@@ -26,7 +27,7 @@
         <activity
             android:name=".app.UI.CourseList"
             android:exported="false"
-            android:label="Term Information" />
+            android:label="Term Details" />
         <activity
             android:name=".app.UI.AddTerm"
             android:exported="false"

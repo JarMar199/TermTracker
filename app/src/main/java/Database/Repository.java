@@ -21,6 +21,7 @@ public class Repository {
     private List<Term> mAllTerms;
     private List<Course> mAssociatedCourses;
     private List<Assessment> mAssociatedAssessments;
+    private Course selectedCourse;
     private int mSelectedCourseId;
     private int mSelectedTermId;
     private int mAssessmentCount;
@@ -77,6 +78,16 @@ public class Repository {
         }
     }
 
+    public Course getCourse(int courseId){
+        databaseExecutor.execute(()-> selectedCourse = mCourseDao.getCourse(courseId));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return selectedCourse;
+    }
+
     public int getSelectedTermId(String termName) {
         databaseExecutor.execute(()-> mSelectedTermId = mTermDao.selectTermId(termName));
         try {
@@ -89,6 +100,15 @@ public class Repository {
 
     public void insert(Assessment assessment) {
         databaseExecutor.execute(()-> mAssessmentDao.insert(assessment));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update(Assessment assessment) {
+        databaseExecutor.execute(()-> mAssessmentDao.update(assessment));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

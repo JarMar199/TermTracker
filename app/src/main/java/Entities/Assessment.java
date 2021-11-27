@@ -12,6 +12,7 @@ public class Assessment {
     private int courseId;
     private String assessmentName, type, startDate, endDate;
 
+
     public Assessment(String assessmentName, String type, String startDate, String endDate, int courseId) {
         this.assessmentName = assessmentName;
         this.type = type;

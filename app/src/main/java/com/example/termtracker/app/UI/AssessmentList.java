@@ -33,6 +33,30 @@ public class AssessmentList extends AppCompatActivity {
         note = getIntent().getStringExtra("courseNote");
         courseId = getIntent().getIntExtra("courseId", -1);
         termId = getIntent().getIntExtra("courseTermId", -1);
+
+
+        textName = findViewById(R.id.assessmentCourseText);
+        textName.setText(courseName);
+        textStart = findViewById(R.id.assessmentCourseStartDate);
+        textStart.setText("Start Date: " + startDate);
+        textEnd = findViewById(R.id.assessmentCourseEndDate);
+        textEnd.setText("End Date: " + endDate);
+        textStatus = findViewById(R.id.assessmentCourseStatus);
+        textStatus.setText(status);
+        textInsName = findViewById(R.id.assessmentCourseInsName);
+        textInsName.setText(insName);
+        textInsPhone = findViewById(R.id.assessmentCourseInsPhone);
+        textInsPhone.setText(insPhone);
+        textInsEmail = findViewById(R.id.assessmentCourseInsEmail);
+        textInsEmail.setText(insEmail);
+        textNote = findViewById(R.id.assessmentCourseNote);
+        textNote.setText(note);
+
+
+
+
+
+
         repository = new Repository(getApplication());
         repository.getAssociatedAssessments(courseId);
         RecyclerView recyclerView = findViewById(R.id.assessmentRecyclerView);
@@ -40,6 +64,7 @@ public class AssessmentList extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.setAssessment(repository.getAssociatedAssessments(courseId));
+
     }
 
     public void addAssessment(View view) {

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.termtracker.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -25,9 +26,11 @@ import Database.Repository;
 import Entities.Course;
 
 public class AddCourse extends AppCompatActivity {
+    String courseName, courseStartDate, courseEndDate, insName, insPhone, insEmail, courseNote, status;
+    int selectedCCourseID;
     String termName, termStart, termEnd;
     int termId;
-    TextView textName;
+    TextView textName, courseId;
     final Calendar myCalendarStart = Calendar.getInstance();
     EditText startText;
     EditText endText;
@@ -53,6 +56,7 @@ public class AddCourse extends AppCompatActivity {
         instructorPhone = findViewById(R.id.courseInstructorPhone);
         instructorEmail = findViewById(R.id.courseInstructorEmail);
         note = findViewById(R.id.courseNote);
+        courseId = findViewById(R.id.courseID);
 
         termName = getIntent().getStringExtra("termName");
         termId = getIntent().getIntExtra("termId", -1);
@@ -60,6 +64,18 @@ public class AddCourse extends AppCompatActivity {
         termEnd = getIntent().getStringExtra("termEnd");
         textName = findViewById(R.id.courseTermText);
         textName.setText(termName);
+
+        courseName = getIntent().getStringExtra("courseName");
+        courseStartDate = getIntent().getStringExtra("courseStart");
+        courseEndDate = getIntent().getStringExtra("courseEnd");
+        status = getIntent().getStringExtra("courseStatus");
+        insName = getIntent().getStringExtra("courseInsName");
+        insPhone = getIntent().getStringExtra("courseInsPhone");
+        insEmail = getIntent().getStringExtra("courseInsEmail");
+        courseNote = getIntent().getStringExtra("courseNote");
+        selectedCCourseID = getIntent().getIntExtra("courseId", -1);
+
+
 
         startDate = new DatePickerDialog.OnDateSetListener() {
 
@@ -113,9 +129,26 @@ public class AddCourse extends AppCompatActivity {
             }
         });
 
-        List<String> statuses = Arrays.asList("In Progress", "Completed", "Dropped","Planning to take");
+        ArrayList<String> statuses = new ArrayList<>(Arrays.asList("In Progress", "Completed", "Dropped", "Planning to take"));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(AddCourse.this, android.R.layout.simple_spinner_dropdown_item,statuses);
         spinner.setAdapter(adapter);
+
+
+        if(selectedCCourseID != -1) {
+            mEditName.setText(courseName);
+            courseId.setText(String.valueOf(selectedCCourseID));
+            startText.setText(courseStartDate);
+            endText.setText(courseEndDate);
+            instructorName.setText(insName);
+            instructorPhone.setText(insPhone);
+            instructorEmail.setText(insEmail);
+            note.setText(courseNote);
+            for(int i = 0; i < statuses.size(); i++) {
+                if(statuses.get(i).equals(status))
+                    spinner.setSelection(i);
+            }
+        }
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

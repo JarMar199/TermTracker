@@ -16,11 +16,13 @@ import com.example.termtracker.R;
 import java.util.Objects;
 
 import Database.Repository;
+import Entities.Term;
 
 public class AssessmentList extends AppCompatActivity {
     String courseName, startDate, endDate, status, insName, insPhone, insEmail, note;
     int courseId, termId, assessmentCount;
     TextView textName, textStart, textEnd, textStatus, textInsName, textInsPhone, textInsEmail, textNote;
+    Term selectedTerm;
     Repository repository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class AssessmentList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.setAssessment(repository.getAssociatedAssessments(courseId));
         assessmentCount = adapter.getItemCount();
+        selectedTerm = repository.getTerm(termId);
 
     }
 
@@ -100,5 +103,22 @@ public class AssessmentList extends AppCompatActivity {
     }
 
     public void editCourse(View view) {
+        Intent intent = new Intent(AssessmentList.this, AddCourse.class);
+        intent.putExtra("termName", selectedTerm.getTermName());
+        intent.putExtra("termId", termId);
+        intent.putExtra("termStart",selectedTerm.getStartDate());
+        intent.putExtra("termEnd", selectedTerm.getEndDate());
+
+        intent.putExtra("courseName", courseName);
+        intent.putExtra("courseId", courseId);
+        intent.putExtra("courseStart", startDate);
+        intent.putExtra("courseEnd", endDate);
+        intent.putExtra("courseStatus", status);
+        intent.putExtra("courseInsName", insName);
+        intent.putExtra("courseInsPhone", insPhone);
+        intent.putExtra("courseInsEmail", insEmail);
+        intent.putExtra("courseNote", note);
+        intent.putExtra("courseTermId", termId);
+        startActivity(intent);
     }
 }

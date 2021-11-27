@@ -203,7 +203,7 @@
         android:id="@+id/saveCourse"
         android:layout_width="405dp"
         android:layout_height="51dp"
-        android:text="Add Course"
+        android:text="Save Course"
         android:onClick="addCourse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

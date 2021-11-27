@@ -27,4 +27,7 @@ public interface TermDao {
 
     @Query("SELECT termId from term_table WHERE termName = :selectedTerm")
     int selectTermId(String selectedTerm);
+
+    @Query("SELECT * FROM term_table WHERE termId = :termId")
+    Term getTerm(int termId);
 }

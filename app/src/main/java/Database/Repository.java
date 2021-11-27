@@ -23,6 +23,7 @@ public class Repository {
     private List<Assessment> mAssociatedAssessments;
     private Course selectedCourse;
     private Assessment selectedAssessment;
+    private Term selectedTerm;
     private int mSelectedCourseId;
     private int mSelectedTermId;
     private int mAssessmentCount;
@@ -97,6 +98,16 @@ public class Repository {
             e.printStackTrace();
         }
         return mSelectedTermId;
+    }
+
+    public Term getTerm(int termId) {
+        databaseExecutor.execute(()-> selectedTerm = mTermDao.getTerm(termId));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return selectedTerm;
     }
 
     public void insert(Assessment assessment) {

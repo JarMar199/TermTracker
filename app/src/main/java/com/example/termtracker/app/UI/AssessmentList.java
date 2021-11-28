@@ -96,6 +96,17 @@ public class AssessmentList extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.share:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, currentCourse.getNote());
+                // (Optional) Here we're setting the title of the content
+                sendIntent.putExtra(Intent.EXTRA_TITLE, "Send message title");
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+                return true;
             case R.id.notify:
                 String format = "MM/dd/yy";
                 SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);

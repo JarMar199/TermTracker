@@ -35,6 +35,7 @@ public class CourseList extends AppCompatActivity {
     TextView textName, textStart, textEnd;
     Repository repository;;
     Term currentTerm;
+    int courseCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +61,7 @@ public class CourseList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.setCourse(repository.getAssociatedCourses(termId));
         currentTerm = repository.getTerm(termId);
-
+        courseCount = adapter.getItemCount();
 
     }
 
@@ -104,8 +105,8 @@ public class CourseList extends AppCompatActivity {
             case R.id.delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(CourseList.this);
 
-                builder.setTitle("Confirm");
-                builder.setMessage("Deleting Term will delete all courses and assessments associated with term. Delete term?");
+                builder.setTitle("WARNING");
+                builder.setMessage("Deleting Term will delete all courses and assessments associated with term. \n" + courseCount + " Course(s) associated with term");
 
                 builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
 

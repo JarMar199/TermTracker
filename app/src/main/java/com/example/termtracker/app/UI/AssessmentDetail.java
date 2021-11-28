@@ -62,7 +62,7 @@ public class AssessmentDetail extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_course, menu);
+        getMenuInflater().inflate(R.menu.menu_assessment, menu);
         return true;
     }
 

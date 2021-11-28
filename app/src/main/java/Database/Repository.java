@@ -38,9 +38,7 @@ public class Repository {
 
     }
     public List<Term> getAllTerms() {
-        databaseExecutor.execute(()->{
-            mAllTerms=mTermDao.getAllTerms();
-        });
+        databaseExecutor.execute(()-> mAllTerms=mTermDao.getAllTerms());
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -49,9 +47,16 @@ public class Repository {
         return mAllTerms;
     }
     public void insert(Term term) {
-        databaseExecutor.execute(()->{
-            mTermDao.insert(term);
-        });
+        databaseExecutor.execute(()-> mTermDao.insert(term));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update(Term term) {
+        databaseExecutor.execute(()-> mTermDao.update(term));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -69,9 +74,7 @@ public class Repository {
     }
 
     public List<Course> getAssociatedCourses(int termId) {
-        databaseExecutor.execute(()->{
-            mAssociatedCourses = mCourseDao.getAssociatedCourses(termId);
-        });
+        databaseExecutor.execute(()-> mAssociatedCourses = mCourseDao.getAssociatedCourses(termId));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -202,11 +205,5 @@ public class Repository {
         }
     }
 
-
-    public int getAssessmentCount(int courseId) {
-
-        databaseExecutor.execute(()-> mAssessmentCount = mAssessmentDao.getAssessmentCount(courseId));
-        return Integer.valueOf(mAssessmentCount);
-    }
 
 }

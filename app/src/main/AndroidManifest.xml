@@ -21,7 +21,7 @@
         <activity
             android:name=".app.UI.AddAssessment"
             android:exported="false"
-            android:label="Add Assessment" />
+            android:label="Add/Edit Assessment" />
         <activity
             android:name=".app.UI.AssessmentList"
             android:exported="false"
@@ -29,7 +29,7 @@
         <activity
             android:name=".app.UI.AddCourse"
             android:exported="false"
-            android:label="Add Course" />
+            android:label="Add/Edit Course" />
         <activity
             android:name=".app.UI.CourseList"
             android:exported="false"
@@ -37,7 +37,7 @@
         <activity
             android:name=".app.UI.AddTerm"
             android:exported="false"
-            android:label="@string/addTerm" />
+            android:label="Add/Edit Term" />
         <activity
             android:name=".app.UI.TermList"
             android:exported="false"

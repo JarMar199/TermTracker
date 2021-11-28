@@ -29,7 +29,6 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="47dp"
-            android:text="TextView"
             android:textAlignment="center"
             android:textSize="16sp"/>
         <TextView
@@ -37,7 +36,6 @@
             android:layout_width="0dp"
             android:layout_height="47dp"
             android:layout_weight="1"
-            android:text="TextView"
             android:textAlignment="center"
             android:textSize="16sp" />
 
@@ -48,7 +46,7 @@
         android:id="@+id/addCourseFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:clickable="true"
         android:scaleType="center"
@@ -66,7 +64,22 @@
         app:layout_constraintBottom_toTopOf="@id/editAssessmentFab"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_editor_absoluteX="0dp">
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/courseLbl"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@color/teal_200"
+                android:text="Courses"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/courseTermLinearLayout"
+                />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/courseRecyclerView"
             android:layout_width="match_parent"
@@ -74,12 +87,16 @@
             android:background="@color/teal_200"
             tools:layout_editor_absoluteX="1dp"
             tools:layout_editor_absoluteY="1dp" />
+
+        </LinearLayout>
     </ScrollView>
+
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/editAssessmentFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginBottom="32dp"
         android:clickable="true"
         android:onClick="editTerm"

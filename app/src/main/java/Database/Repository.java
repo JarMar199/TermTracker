@@ -89,6 +89,15 @@ public class Repository {
         }
     }
 
+    public void delete(Course course) {
+        databaseExecutor.execute(()-> mCourseDao.delete(course));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Course getCourse(int courseId){
         databaseExecutor.execute(()-> selectedCourse = mCourseDao.getCourse(courseId));
         try {
@@ -164,6 +173,15 @@ public class Repository {
             e.printStackTrace();
         }
         return selectedAssessment;
+    }
+
+    public void deleteAssociatedAssessment(int courseId){
+        databaseExecutor.execute(()->  mAssessmentDao.deleteAssociatedAssessments(courseId));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 

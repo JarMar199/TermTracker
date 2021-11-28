@@ -103,7 +103,7 @@ public class CourseList extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CourseList.this);
 
                 builder.setTitle("Confirm");
-                builder.setMessage("Are you sure?");
+                builder.setMessage("Deleting Term will delete all courses associated with term. Delete term?");
 
                 builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
 

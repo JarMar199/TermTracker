@@ -1,5 +1,6 @@
 package com.example.termtracker.app.UI;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import Database.Repository;
+import Entities.Course;
 import Entities.Term;
 
 public class AssessmentList extends AppCompatActivity {
@@ -31,6 +35,7 @@ public class AssessmentList extends AppCompatActivity {
     TextView textName, textStart, textEnd, textStatus, textInsName, textInsPhone, textInsEmail, textNote;
     Term selectedTerm;
     Repository repository;
+    Course currentCourse;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +81,13 @@ public class AssessmentList extends AppCompatActivity {
         adapter.setAssessment(repository.getAssociatedAssessments(courseId));
         assessmentCount = adapter.getItemCount();
         selectedTerm = repository.getTerm(termId);
+        currentCourse = repository.getCourse(courseId);
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_course, menu);
+        return true;
     }
 
     @Override
@@ -112,6 +123,34 @@ public class AssessmentList extends AppCompatActivity {
                 Toast.makeText(this, "Course Notifications Set", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.delete:
+                AlertDialog.Builder builder = new AlertDialog.Builder(AssessmentList.this);
+
+                builder.setTitle("Confirm");
+                builder.setMessage("Deleting Course will delete all associated assessments");
+
+                builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                    repository.deleteAssociatedAssessment(courseId);
+                    repository.delete(currentCourse);
+                    Intent intent = new Intent(AssessmentList.this, CourseList.class);
+                    intent.putExtra("termName", selectedTerm.getTermName());
+                    intent.putExtra("termId", termId);
+                    intent.putExtra("termStart",selectedTerm.getStartDate());
+                    intent.putExtra("termEnd", selectedTerm.getEndDate());
+                    startActivity(intent);
+                    dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
         }
         return super.onOptionsItemSelected(item);
     }

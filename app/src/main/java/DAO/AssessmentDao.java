@@ -30,4 +30,7 @@ public interface AssessmentDao {
 
     @Query("SELECT * FROM assessment_table WHERE assessmentId = :assessmentId")
     Assessment getAssessment(int assessmentId);
+
+    @Query("DELETE FROM assessment_table where courseId = :courseId ")
+    void deleteAssociatedAssessments(int courseId);
 }

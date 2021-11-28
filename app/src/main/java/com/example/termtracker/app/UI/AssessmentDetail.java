@@ -1,10 +1,12 @@
 package com.example.termtracker.app.UI;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -60,7 +62,7 @@ public class AssessmentDetail extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_assessment, menu);
+        getMenuInflater().inflate(R.menu.menu_course, menu);
         return true;
     }
 
@@ -70,6 +72,8 @@ public class AssessmentDetail extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.share:
+
             case R.id.notify:
                 String format = "MM/dd/yy";
                 SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
@@ -97,19 +101,40 @@ public class AssessmentDetail extends AppCompatActivity {
                 Toast.makeText(this, "Assessment Notifications Set", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.delete:
-                repository.delete(currentAssessment);
-                intent = new Intent(AssessmentDetail.this, AssessmentList.class);
-                intent.putExtra("courseName", selectedCourse.getCourseName());
-                intent.putExtra("courseId", selectedCourse.getCourseId());
-                intent.putExtra("courseStart", selectedCourse.getStartDate());
-                intent.putExtra("courseEnd", selectedCourse.getEndDate());
-                intent.putExtra("courseStatus", selectedCourse.getStatus());
-                intent.putExtra("courseInsName",selectedCourse.getInstructorName());
-                intent.putExtra("courseInsPhone", selectedCourse.getInstructorPhone());
-                intent.putExtra("courseInsEmail", selectedCourse.getInstructorEmail());
-                intent.putExtra("courseNote", selectedCourse.getNote());
-                intent.putExtra("courseTermId", selectedCourse.getTermId());
-                startActivity(intent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AssessmentDetail.this);
+
+                builder.setTitle("Confirm");
+                builder.setMessage("Delete assessment?");
+
+                builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        repository.delete(currentAssessment);
+                        Intent intent = new Intent(AssessmentDetail.this, AssessmentList.class);
+                        intent.putExtra("courseName", selectedCourse.getCourseName());
+                        intent.putExtra("courseId", selectedCourse.getCourseId());
+                        intent.putExtra("courseStart", selectedCourse.getStartDate());
+                        intent.putExtra("courseEnd", selectedCourse.getEndDate());
+                        intent.putExtra("courseStatus", selectedCourse.getStatus());
+                        intent.putExtra("courseInsName",selectedCourse.getInstructorName());
+                        intent.putExtra("courseInsPhone", selectedCourse.getInstructorPhone());
+                        intent.putExtra("courseInsEmail", selectedCourse.getInstructorEmail());
+                        intent.putExtra("courseNote", selectedCourse.getNote());
+                        intent.putExtra("courseTermId", selectedCourse.getTermId());
+                        startActivity(intent);
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+
         }
         return super.onOptionsItemSelected(item);
     }

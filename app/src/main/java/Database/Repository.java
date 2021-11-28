@@ -59,6 +59,15 @@ public class Repository {
         }
     }
 
+    public void delete(Term term) {
+        databaseExecutor.execute(()-> mTermDao.delete(term));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Course> getAssociatedCourses(int termId) {
         databaseExecutor.execute(()->{
             mAssociatedCourses = mCourseDao.getAssociatedCourses(termId);
@@ -106,6 +115,15 @@ public class Repository {
             e.printStackTrace();
         }
         return selectedCourse;
+    }
+
+    public void deleteAssociatedCourses(int termId) {
+        databaseExecutor.execute(()->  mCourseDao.deleteAssociatedCourses(termId));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getSelectedTermId(String termName) {

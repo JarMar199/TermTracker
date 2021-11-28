@@ -31,4 +31,7 @@ public interface CourseDao {
 
     @Query("SELECT * FROM course_table WHERE courseId = :courseId")
     Course getCourse(int courseId);
+
+    @Query("DELETE FROM course_table WHERE termId = :termId")
+    void deleteAssociatedCourses(int termId);
 }

@@ -22,16 +22,19 @@ import com.example.termtracker.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import Database.Repository;
 import Entities.Course;
+import Entities.Term;
 
 public class CourseList extends AppCompatActivity {
     String termName, startDate, endDate;
     int termId;
     TextView textName, textStart, textEnd;
     Repository repository;;
+    Term currentTerm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +59,13 @@ public class CourseList extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.setCourse(repository.getAssociatedCourses(termId));
+        currentTerm = repository.getTerm(termId);
 
 
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_course, menu);
+        getMenuInflater().inflate(R.menu.menu_assessment, menu);
         return true;
     }
 
@@ -71,8 +75,6 @@ public class CourseList extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
-            case R.id.share:
-
             case R.id.notify:
                 String format = "MM/dd/yy";
                 SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
@@ -103,12 +105,19 @@ public class CourseList extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CourseList.this);
 
                 builder.setTitle("Confirm");
-                builder.setMessage("Deleting Term will delete all courses associated with term. Delete term?");
+                builder.setMessage("Deleting Term will delete all courses and assessments associated with term. Delete term?");
 
                 builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(CourseList.this, "Deleted", Toast.LENGTH_LONG).show();
+                        List<Course> associatedCourses = repository.getAssociatedCourses(termId);
+                        for(Course course : associatedCourses){
+                            repository.deleteAssociatedAssessment(course.getCourseId());
+                        }
+                        repository.deleteAssociatedCourses(termId);
+                        repository.delete(currentTerm);
+                        Intent intent = new Intent(CourseList.this, TermList.class);
+                        startActivity(intent);
                         dialog.dismiss();
                     }
                 });

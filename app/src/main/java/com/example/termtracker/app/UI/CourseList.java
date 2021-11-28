@@ -1,5 +1,6 @@
 package com.example.termtracker.app.UI;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -98,6 +100,27 @@ public class CourseList extends AppCompatActivity {
                 Toast.makeText(this, "Term Notifications Set", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.delete:
+                AlertDialog.Builder builder = new AlertDialog.Builder(CourseList.this);
+
+                builder.setTitle("Confirm");
+                builder.setMessage("Are you sure?");
+
+                builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(CourseList.this, "Deleted", Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
         }
         return super.onOptionsItemSelected(item);
     }

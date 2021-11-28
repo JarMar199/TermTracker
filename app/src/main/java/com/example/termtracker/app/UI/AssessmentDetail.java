@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.termtracker.R;
 
@@ -93,6 +94,7 @@ public class AssessmentDetail extends AppCompatActivity {
                 sender=PendingIntent.getBroadcast(AssessmentDetail.this, ++MainActivity.numAlert,intent,0);
                 alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, sender);
+                Toast.makeText(this, "Assessment Notifications Set", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.delete:
                 repository.delete(currentAssessment);

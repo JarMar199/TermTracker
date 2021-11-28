@@ -4,22 +4,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.termtracker.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import Database.Repository;
+import Entities.Course;
 
 public class CourseList extends AppCompatActivity {
     String termName, startDate, endDate;
     int termId;
     TextView textName, textStart, textEnd;
-    Repository repository;
+    Repository repository;;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +55,7 @@ public class CourseList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.setCourse(repository.getAssociatedCourses(termId));
 
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
@@ -61,7 +72,31 @@ public class CourseList extends AppCompatActivity {
             case R.id.share:
 
             case R.id.notify:
+                String format = "MM/dd/yy";
+                SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
+                Date startDateNotice = null;
+                Date endDateNotice = null;
+                try {
+                    startDateNotice = sdf.parse(startDate);
+                    endDateNotice = sdf.parse(endDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long startTrigger = startDateNotice.getTime();
+                Long endTrigger = endDateNotice.getTime();
+                Intent intent= new Intent(CourseList.this,MyReceiver.class);
+                intent.putExtra("key",termName + " Starts Today");
+                PendingIntent sender=PendingIntent.getBroadcast(CourseList.this, ++MainActivity.numAlert,intent,0);
+                AlarmManager alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, sender);
 
+                intent= new Intent(CourseList.this,MyReceiver.class);
+                intent.putExtra("key",termName + " Ends Today");
+                sender=PendingIntent.getBroadcast(CourseList.this, ++MainActivity.numAlert,intent,0);
+                alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, sender);
+                Toast.makeText(this, "Term Notifications Set", Toast.LENGTH_LONG).show();
+                return true;
             case R.id.delete:
         }
         return super.onOptionsItemSelected(item);
@@ -77,7 +112,7 @@ public class CourseList extends AppCompatActivity {
     }
 
     public void editTerm(View view) {
-        Intent intent = new Intent(CourseList.this, AddCourse.class);
+        Intent intent = new Intent(CourseList.this, AddTerm.class);
         intent.putExtra("termName", termName);
         intent.putExtra("termId", termId);
         intent.putExtra("termStart",startDate);

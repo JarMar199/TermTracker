@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,6 +16,10 @@ import android.widget.Toast;
 
 import com.example.termtracker.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import Database.Repository;
@@ -78,6 +85,33 @@ public class AssessmentList extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.notify:
+                String format = "MM/dd/yy";
+                SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
+                Date startDateNotice = null;
+                Date endDateNotice = null;
+                try {
+                    startDateNotice = sdf.parse(startDate);
+                    endDateNotice = sdf.parse(endDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long startTrigger = startDateNotice.getTime();
+                Long endTrigger = endDateNotice.getTime();
+                Intent intent= new Intent(AssessmentList.this,MyReceiver.class);
+                intent.putExtra("key",courseName + " Starts Today");
+                PendingIntent sender=PendingIntent.getBroadcast(AssessmentList.this, ++MainActivity.numAlert,intent,0);
+                AlarmManager alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, sender);
+
+                intent= new Intent(AssessmentList.this,MyReceiver.class);
+                intent.putExtra("key",courseName + " Ends Today");
+                sender=PendingIntent.getBroadcast(AssessmentList.this, ++MainActivity.numAlert,intent,0);
+                alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, sender);
+                Toast.makeText(this, "Course Notifications Set", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.delete:
         }
         return super.onOptionsItemSelected(item);
     }
